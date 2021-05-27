@@ -1,0 +1,9 @@
+namespace ROC;
+
+table ActionInfo {
+  uavID: string;
+  Latitude: string;
+  Longitude: string;
+}
+
+root_type ActionInfo;
