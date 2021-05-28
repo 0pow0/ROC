@@ -1,9 +1,9 @@
 namespace ROC;
 
 table ActionInfo {
-  uavID: string;
-  Latitude: string;
-  Longitude: string;
+  uav_id: string;
+  latitude: string;
+  longitude: string;
 }
 
 root_type ActionInfo;
