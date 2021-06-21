@@ -1,17 +1,19 @@
 package ROCBuilder;
 
-import ROC.*;
+import ROC.CreationInfo;
 import com.google.flatbuffers.FlatBufferBuilder;
 
-class ActionInfoBuilder {
+public class CreationInfoBuilder {
     private String uavId;
     private String lat;
     private String lng;
+    private int masterId;
 
-    public ActionInfoBuilder() {
+    public CreationInfoBuilder() {
         uavId = "";
         lat = "";
-        lng = ""; 
+        lng = "";
+        masterId = -1;
     }
 
     public void setUavId(String uavId) {
@@ -38,20 +40,25 @@ class ActionInfoBuilder {
         return this.lng; 
     }
 
-    public byte[] buildFB() {
-        FlatBufferBuilder builder = new FlatBufferBuilder(0);
+    public void setMasterId(int masterId) {
+        this.masterId = masterId; 
+    }
+
+    public int getMasterId() {
+        return this.masterId; 
+    }
+
+    public int buildCreationInfo(FlatBufferBuilder builder) {
         int uav_id = builder.createString(uavId);
         int latitude = builder.createString(lat);
         int longitude = builder.createString(lng);
 
-        ActionInfo.startActionInfo(builder);
-        ActionInfo.addUavId(builder, uav_id);
-        ActionInfo.addLatitude(builder, latitude);
-        ActionInfo.addLongitude(builder, longitude);
-        int orc = ActionInfo.endActionInfo(builder);
-        builder.finish(orc);
-        byte[] buf = builder.sizedByteArray();
-
-        return buf;
+        CreationInfo.startCreationInfo(builder);
+        CreationInfo.addUavId(builder, uav_id);
+        CreationInfo.addLatitude(builder, latitude);
+        CreationInfo.addLongitude(builder, longitude);
+        CreationInfo.addMasterId(builder, masterId);
+        int creationInfo = CreationInfo.endCreationInfo(builder);
+        return creationInfo;
     }
 }

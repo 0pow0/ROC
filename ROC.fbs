@@ -1,0 +1,25 @@
+namespace ROC;
+
+table ActionInfo {
+  uav_id: string;
+  latitude: string;
+  longitude: string;
+}
+
+table CreationInfo {
+    uav_id: string;
+    latitude: string;
+    longitude: string;
+    master_id: int;
+}
+
+union ROCType {
+    Action: ActionInfo,
+    Create: CreationInfo
+}
+
+table ROCInfo {
+    info: ROCType;
+}
+
+root_type ROCInfo;
