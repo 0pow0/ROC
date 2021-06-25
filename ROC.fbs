@@ -13,9 +13,14 @@ table CreationInfo {
     master_id: int;
 }
 
+table DeletionInfo {
+   uav_id: string; 
+}
+
 union ROCType {
     Action: ActionInfo,
-    Create: CreationInfo
+    Create: CreationInfo,
+    Delete: DeletionInfo
 }
 
 table ROCInfo {

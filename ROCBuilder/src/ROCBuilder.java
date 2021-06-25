@@ -1,7 +1,6 @@
 package ROCBuilder;
 
-import ROCBuilder.ActionInfoBuilder;
-import ROCBuilder.CreationInfoBuilder;
+import ROCBuilder.*;
 import ROC.ROCInfo;
 import ROC.ROCType;
 import com.google.flatbuffers.FlatBufferBuilder;
@@ -9,10 +8,26 @@ import com.google.flatbuffers.FlatBufferBuilder;
 public class ROCBuilder {
     public ActionInfoBuilder actionInfoBuilder;
     public CreationInfoBuilder creationInfoBuilder;
+    public DeletionInfoBuilder deletionInfoBuilder;
 
     public ROCBuilder() {
         this.actionInfoBuilder = new ActionInfoBuilder(); 
         this.creationInfoBuilder = new CreationInfoBuilder();
+        this.deletionInfoBuilder = new DeletionInfoBuilder();
+    }
+
+    public byte[] buildDeletionInfo(String uavId) {
+        FlatBufferBuilder builder = new FlatBufferBuilder(0);
+        deletionInfoBuilder.setUavId(uavId);
+        int deletionInfo = deletionInfoBuilder.buildDeletionInfo(builder);
+
+        ROCInfo.startROCInfo(builder); 
+        ROCInfo.addInfoType(builder, ROCType.Delete);
+        ROCInfo.addInfo(builder, deletionInfo);
+        int rocInfo = ROCInfo.endROCInfo(builder);
+        builder.finish(rocInfo);
+        byte[] buf = builder.sizedByteArray();
+        return buf;
     }
 
     public byte[] buildCreationInfo(String uavId, String lat, String lng, int masterId) {
