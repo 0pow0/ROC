@@ -29,14 +29,14 @@ public class Test {
             System.out.println(e); 
 		}
 
-        byte[] buf1 = rocb.buildCreationInfo("123", "123", "123", 3);
+        byte[] buf1 = rocb.buildCreationInfo("10", "123", "123", "123", 3);
         try {
 			os.write(buf1);
 		}
 		catch (Exception e) {
 			System.out.println(e); 
 		}
-        byte[] buf2 = rocb.buildActionInfo("123", "123", "123");
+        byte[] buf2 = rocb.buildActionInfo("10", "123", "123", "123");
         try {
 			os.write(buf2);
 		}

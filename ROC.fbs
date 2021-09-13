@@ -7,24 +7,36 @@ table ActionInfo {
 }
 
 table CreationInfo {
-    uav_id: string;
-    latitude: string;
-    longitude: string;
-    master_id: int;
+  uav_id: string;
+  latitude: string;
+  longitude: string;
+  master_id: int;
 }
 
 table DeletionInfo {
-   uav_id: string; 
+  uav_id: string; 
+}
+
+table SINRReq {
+  uav_id: string; 
+}
+
+table SINRResp {
+  uav_id: string;
+  sinr: string;  
 }
 
 union ROCType {
-    Action: ActionInfo,
-    Create: CreationInfo,
-    Delete: DeletionInfo
+  Action: ActionInfo,
+  Create: CreationInfo,
+  Delete: DeletionInfo,
+  SINRReq: SINRReq,
+  SINRResp: SINRResp
 }
 
 table ROCInfo {
-    info: ROCType;
+  timestep: string;
+  info: ROCType;
 }
 
 root_type ROCInfo;

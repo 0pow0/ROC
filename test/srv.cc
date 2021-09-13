@@ -16,7 +16,7 @@ void sig_chld(int signo) {
 
 using namespace ROC; 
 
-void action_info_getter(int);
+void roc_getter(int);
 
 int main(int argc, char **argv) {
 	int					listenfd, connfd;
@@ -48,14 +48,14 @@ int main(int argc, char **argv) {
 
 		if ( (childpid = Fork()) == 0) {	/* child process */
 			Close(listenfd);	/* close listening socket */
-            action_info_getter(connfd);
+            roc_getter(connfd);
 			exit(0);
 		}
 		Close(connfd);			/* parent closes connected socket */
 	}
 }
 
-void action_info_getter(int sockfd) {
+void roc_getter(int sockfd) {
     ssize_t n; 
     char buf[MAXLINE];
 again:
@@ -63,6 +63,8 @@ again:
         uint8_t* buf_pointer = (uint8_t*) buf; 
         auto roc_info = GetROCInfo(buf_pointer);
         auto roc_type = roc_info->info_type();
+        auto timestep = roc_info->timestep();
+        std::cout << "timestep = " << timestep->str() <<  std::endl;
         if (roc_type == ROCType_Create) {
             auto creation_info = static_cast<const CreationInfo*>(roc_info->info());
             auto id = creation_info->uav_id();
@@ -84,6 +86,16 @@ again:
             std::cout << "uav id = " << id->str() << std::endl;
             std::cout << "lat = " << lat->str() << std::endl;
             std::cout << "lng = " << lng->str() << std::endl;
+        }
+        else if (roc_type == ROCType_SINR) {
+            auto sinr_req = static_cast<const SINRReq*>(roc_info->info());
+            auto id = sinr_req->uav_id();
+            std::cout << "Uav id = " << id->str() << std::endl;
+        } 
+        else if (roc_type == ROCType_Delete) {
+            auto deletion_info = static_cast<const DeletionInfo*>(roc_info->info());
+            auto id = deletion_info->uav_id();
+            std::cout << "Uav id = " << id->str() << std::endl;
         }
     }
 }
