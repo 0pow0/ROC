@@ -8,5 +8,5 @@ SinrRespBuilder sinrBuilder;
 
 public:
 ROCBuilder();
-uint8_t* buildSINRResp (string, string, string);
+std::pair<uint8_t*, int> buildSINRResp (string, string, string);
 };

@@ -63,8 +63,8 @@ again:
         uint8_t* buf_pointer = (uint8_t*) buf; 
         auto roc_info = GetROCInfo(buf_pointer);
         auto roc_type = roc_info->info_type();
-        auto timestep = roc_info->timestep();
-        std::cout << "timestep = " << timestep->str() <<  std::endl;
+        auto delay = roc_info->delay();
+        std::cout << "delay = " << delay->str() <<  std::endl;
         if (roc_type == ROCType_Create) {
             auto creation_info = static_cast<const CreationInfo*>(roc_info->info());
             auto id = creation_info->uav_id();
@@ -87,7 +87,7 @@ again:
             std::cout << "lat = " << lat->str() << std::endl;
             std::cout << "lng = " << lng->str() << std::endl;
         }
-        else if (roc_type == ROCType_SINR) {
+        else if (roc_type == ROCType_SINRReq) {
             auto sinr_req = static_cast<const SINRReq*>(roc_info->info());
             auto id = sinr_req->uav_id();
             std::cout << "Uav id = " << id->str() << std::endl;
