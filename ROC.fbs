@@ -24,6 +24,8 @@ table SINRReq {
 table SINRResp {
   uav_id: string;
   sinr: string;  
+  distance: string;
+  cqi: string;
 }
 
 table ThroughputReq {

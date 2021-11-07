@@ -27,10 +27,14 @@ std::pair<uint8_t*, int> ROCBuilder::buildThroughputResp (
 std::pair<uint8_t*, int> ROCBuilder::buildSINRResp (
     string delay,
     string id, 
-    string sinr) {
+    string sinr,
+    string distance,
+    string cqi) {
     flatbuffers::FlatBufferBuilder builder(0);
     sinrBuilder.uav_id = id;
     sinrBuilder.sinr = sinr;
+    sinrBuilder.distance = distance;
+    sinrBuilder.cqi = cqi;
     auto sinrResp = sinrBuilder.buildSinrResp(builder);
     auto delay_ = builder.CreateString(delay);
     auto rocInfo = ROC::CreateROCInfo(
