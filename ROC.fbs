@@ -26,12 +26,23 @@ table SINRResp {
   sinr: string;  
 }
 
+table ThroughputReq {
+  uav_id: string;
+}
+
+table ThroughputResp {
+  uav_id: string;
+  throughput: string;
+}
+
 union ROCType {
   Action: ActionInfo,
   Create: CreationInfo,
   Delete: DeletionInfo,
   SINRReq: SINRReq,
-  SINRResp: SINRResp
+  SINRResp: SINRResp,
+  ThroughputReq: ThroughputReq,
+  ThroughputResp: ThroughputResp
 }
 
 table ROCInfo {

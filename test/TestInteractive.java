@@ -16,7 +16,7 @@ import java.io.OutputStream;
 
 
 public class TestInteractive {
-    private static String leading = "0: action info; 1: creation info; 2: deletion info; 3: SINRReq 4: ReadFromSocket";
+    private static String leading = "0: action info; 1: creation info; 2: deletion info; 3: SINRReq 4: ReadFromSocket 5: ThroughputReq";
     public static void main(String[] args) {
         ROCBuilder rocb = new ROCBuilder();
         Socket socket = new Socket();
@@ -59,6 +59,8 @@ public class TestInteractive {
                         break;
                 case 4: readFromSocket(is);
                         break;
+                case 5: requireForThroughputReq(os, rocb, in);
+                        break;
                 default: break;
             }
             System.out.println();
@@ -84,9 +86,30 @@ public class TestInteractive {
                 System.out.println("Uav id = " + resp.uavId());
                 System.out.println("SINR = " + resp.sinr());
             }
+            else if (rocType == ROCType.ThroughputResp) {
+                ThroughputResp resp = (ThroughputResp) roc.info(new ThroughputResp());
+                System.out.println("Uav id = " + resp.uavId());
+                System.out.println("Throughpu [Tx, Rx] = " + resp.throughput());
+            }
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    private static void requireForThroughputReq(OutputStream os, ROCBuilder rocb, Scanner in) {
+        System.out.println("delay");
+        String delay = in.next();
+        if (delay.length() == 0) delay = "0.0";
+
+        System.out.println("uav_id");
+        String uav_id = in.next();
+        byte[] buf = rocb.buildThroughputReq(delay, uav_id);
+        try {
+			os.write(buf);
+		}
+		catch (Exception e) {
+			System.out.println(e); 
+		}
     }
 
     private static void requireForSINRRequest(OutputStream os, ROCBuilder rocb, Scanner in) {

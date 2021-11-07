@@ -3,6 +3,27 @@
 
 ROCBuilder::ROCBuilder() {}
 
+std::pair<uint8_t*, int> ROCBuilder::buildThroughputResp (
+    string delay,
+    string id,
+    string thrpt
+) {
+    flatbuffers::FlatBufferBuilder builder(0);
+    thrptBuilder.uav_id = id;
+    thrptBuilder.throughput = thrpt;
+    auto thrptResp = thrptBuilder.buildThroughputResp(builder);
+    auto delay_ = builder.CreateString(delay);
+    auto rocInfo = ROC::CreateROCInfo(
+        builder,
+        delay_,
+        ROC::ROCType_ThroughputResp,
+        thrptResp.Union());
+    builder.Finish(rocInfo);
+    //std::cout << "[ROCBuilde]Size = " << (int) builder.GetSize() << "\n";
+    uint8_t* buffer_pointer = builder.GetBufferPointer();
+    return std::make_pair(buffer_pointer, (int) builder.GetSize());
+}
+
 std::pair<uint8_t*, int> ROCBuilder::buildSINRResp (
     string delay,
     string id, 

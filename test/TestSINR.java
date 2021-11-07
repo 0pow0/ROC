@@ -119,13 +119,24 @@ public class TestSINR {
 
     public static void main(String[] args) {
         TestSINR test = new TestSINR();
-        int numUE = 25;
-        String lat = "47.980315";
-        String lng = "-102.939365";
-        String masterID = "5";
+        int numUE = 40;
+        double lat = 47.989;
+        double lng = -102.939365;
+        //double lat = 47.980315;
+        //double lng = -102.939365;
+        String masterID = "0";
         // initialize UE
         for (int i = 0; i < numUE; i++) {
-            test.sendCreationInfo("0s", Integer.toString(i), lat, lng, masterID); 
+            //double lat_ = lat + (100 + Math.random() * (1000)) / 1000000;
+            //double lng_ = lng + (100 + Math.random() * (1000)) / 1000000;
+            //System.out.println("lat_: " + lat_);
+            //System.out.println("lng_: " + lng_);
+            test.sendCreationInfo("0s", Integer.toString(i), Double.toString(lat)
+                    , Double.toString(lng), masterID); 
+            //test.sendSINRRequest("1s", Integer.toString(i));
+            //test.readFromSocket();
+        }
+        for (int i = 0; i < numUE; i++) {
             test.sendSINRRequest("1s", Integer.toString(i));
             test.readFromSocket();
         }

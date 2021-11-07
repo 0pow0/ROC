@@ -97,6 +97,17 @@ again:
             auto id = deletion_info->uav_id();
             std::cout << "Uav id = " << id->str() << std::endl;
         }
+        else if (roc_type == ROCType_ThroughputReq) {
+            auto throughput_req = static_cast<const ThroughputReq*>(roc_info->info());
+            auto id = throughput_req->uav_id();
+            std::cout << "Uav id = " << id->str() << std::endl;
+        }
+        else if (roc_type == ROCType_ThroughputResp) {
+            auto throughput_resp = static_cast<const ThroughputResp*>(roc_info->info());
+            auto id = throughput_resp->uav_id();
+            auto thrpt = throughput_resp->throughput();
+            std::cout << "Uav id = " << id->str() << " Throughput = " << thrpt->str() << std::endl;
+        }
     }
 }
 

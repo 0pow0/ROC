@@ -10,12 +10,30 @@ public class ROCBuilder {
     public CreationInfoBuilder creationInfoBuilder;
     public DeletionInfoBuilder deletionInfoBuilder;
     public SINRReqBuilder sinrReqBuilder;
+    public ThroughputReqBuilder throughputReqBuilder;
 
     public ROCBuilder() {
         this.actionInfoBuilder = new ActionInfoBuilder(); 
         this.creationInfoBuilder = new CreationInfoBuilder();
         this.deletionInfoBuilder = new DeletionInfoBuilder();
         this.sinrReqBuilder = new SINRReqBuilder();
+        this.throughputReqBuilder = new ThroughputReqBuilder();
+    }
+
+    public byte[] buildThroughputReq(String delay, String uavId) {
+        FlatBufferBuilder builder = new FlatBufferBuilder(0);
+        throughputReqBuilder.setUavId(uavId);
+        int throughputReq = throughputReqBuilder.buildThroughputReq(builder);
+        int delay_ = builder.createString(delay);
+
+        ROCInfo.startROCInfo(builder);
+        ROCInfo.addDelay(builder, delay_);
+        ROCInfo.addInfoType(builder, ROCType.ThroughputReq);
+        ROCInfo.addInfo(builder, throughputReq);
+        int rocInfo = ROCInfo.endROCInfo(builder);
+        builder.finish(rocInfo);
+        byte[] buf = builder.sizedByteArray();
+        return buf;
     }
 
     public byte[] buildSINRReq(String delay, String uavId) {
