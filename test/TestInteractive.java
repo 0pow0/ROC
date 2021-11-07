@@ -85,6 +85,8 @@ public class TestInteractive {
                 SINRResp resp = (SINRResp) roc.info(new SINRResp());
                 System.out.println("Uav id = " + resp.uavId());
                 System.out.println("SINR = " + resp.sinr());
+                System.out.println("Distance = " + resp.distance());
+                System.out.println("CQI = " + resp.cqi());
             }
             else if (rocType == ROCType.ThroughputResp) {
                 ThroughputResp resp = (ThroughputResp) roc.info(new ThroughputResp());
