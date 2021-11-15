@@ -3,6 +3,9 @@ package ROCBuilder;
 import ROCBuilder.*;
 import ROC.ROCInfo;
 import ROC.ROCType;
+
+import java.util.Arrays;
+
 import com.google.flatbuffers.FlatBufferBuilder;
 
 public class ROCBuilder {
@@ -11,6 +14,7 @@ public class ROCBuilder {
     public DeletionInfoBuilder deletionInfoBuilder;
     public SINRReqBuilder sinrReqBuilder;
     public ThroughputReqBuilder throughputReqBuilder;
+    private int messageLength = 1024;
 
     public ROCBuilder() {
         this.actionInfoBuilder = new ActionInfoBuilder(); 
@@ -33,6 +37,7 @@ public class ROCBuilder {
         int rocInfo = ROCInfo.endROCInfo(builder);
         builder.finish(rocInfo);
         byte[] buf = builder.sizedByteArray();
+        if (buf.length < 1024) buf = Arrays.copyOf(buf, messageLength);
         return buf;
     }
 
@@ -49,6 +54,7 @@ public class ROCBuilder {
         int rocInfo = ROCInfo.endROCInfo(builder);
         builder.finish(rocInfo);
         byte[] buf = builder.sizedByteArray();
+        if (buf.length < 1024) buf = Arrays.copyOf(buf, messageLength);
         return buf;
     }
 
@@ -65,6 +71,7 @@ public class ROCBuilder {
         int rocInfo = ROCInfo.endROCInfo(builder);
         builder.finish(rocInfo);
         byte[] buf = builder.sizedByteArray();
+        if (buf.length < 1024) buf = Arrays.copyOf(buf, messageLength);
         return buf;
     }
 
@@ -85,6 +92,7 @@ public class ROCBuilder {
         int rocInfo = ROCInfo.endROCInfo(builder);
         builder.finish(rocInfo);
         byte[] buf = builder.sizedByteArray();
+        if (buf.length < 1024) buf = Arrays.copyOf(buf, messageLength);
         return buf;
     }
 
@@ -104,6 +112,7 @@ public class ROCBuilder {
         int rocInfo = ROCInfo.endROCInfo(builder);
         builder.finish(rocInfo);
         byte[] buf = builder.sizedByteArray();
+        if (buf.length < 1024) buf = Arrays.copyOf(buf, messageLength);
         return buf;
     }
 }

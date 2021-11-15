@@ -91,7 +91,7 @@ public class TestInteractive {
             else if (rocType == ROCType.ThroughputResp) {
                 ThroughputResp resp = (ThroughputResp) roc.info(new ThroughputResp());
                 System.out.println("Uav id = " + resp.uavId());
-                System.out.println("Throughpu [Tx, Rx] = " + resp.throughput());
+                System.out.println("Throughput [Tx, Rx] = " + resp.throughput());
             }
         } catch (Exception e) {
             System.out.println(e);
