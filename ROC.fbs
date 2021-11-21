@@ -26,6 +26,7 @@ table SINRResp {
   sinr: string;  
   distance: string;
   cqi: string;
+  enb_id: string;
 }
 
 table ThroughputReq {
