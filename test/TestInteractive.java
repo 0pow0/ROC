@@ -70,7 +70,8 @@ public class TestInteractive {
     
     private static void readFromSocket(InputStream is) {
         try {
-            byte[] len = is.readNBytes(4);
+            byte[] len = new byte[4];
+            is.read(len, 0, 4);
             java.nio.ByteBuffer buf = java.nio.ByteBuffer.wrap(len);
             int N = buf.getInt();
             System.out.println("Message length is " + N);
@@ -87,6 +88,7 @@ public class TestInteractive {
                 System.out.println("SINR = " + resp.sinr());
                 System.out.println("Distance = " + resp.distance());
                 System.out.println("CQI = " + resp.cqi());
+                System.out.println("eNB# = " + resp.enbId());
             }
             else if (rocType == ROCType.ThroughputResp) {
                 ThroughputResp resp = (ThroughputResp) roc.info(new ThroughputResp());
