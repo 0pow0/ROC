@@ -36,6 +36,8 @@ table ThroughputReq {
 table ThroughputResp {
   uav_id: string;
   throughput: string;
+  time_stamp: string;
+  total_bytes: string;
 }
 
 union ROCType {

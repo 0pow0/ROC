@@ -14,6 +14,8 @@ flatbuffers::Offset<ROC::ThroughputResp> ThroughputRespBuilder::buildThroughputR
     flatbuffers::FlatBufferBuilder& builder) {
     auto uav_id_ = builder.CreateString (uav_id);
     auto thrpt = builder.CreateString (throughput);
+    auto time_stamp_ = builder.CreateString (time_stamp);
+    auto total_bytes_ = builder.CreateString (total_bytes);
 
-    return ROC::CreateThroughputResp(builder, uav_id_, thrpt);
+    return ROC::CreateThroughputResp(builder, uav_id_, thrpt, time_stamp_, total_bytes_);
 }

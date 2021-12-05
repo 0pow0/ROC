@@ -6,6 +6,8 @@ class ThroughputRespBuilder {
 public:
 string uav_id;
 string throughput;
+string time_stamp;
+string total_bytes;
 public:
 ThroughputRespBuilder();
 ThroughputRespBuilder(string, string);
