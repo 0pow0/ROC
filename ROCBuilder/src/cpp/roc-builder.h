@@ -11,5 +11,5 @@ ThroughputRespBuilder thrptBuilder;
 public:
 ROCBuilder();
 std::pair<uint8_t*, int> buildSINRResp (string, string, string, string, string, string);
-std::pair<uint8_t*, int> buildThroughputResp (string, string, string);
+std::pair<uint8_t*, int> buildThroughputResp (string, string, string, string, string, string);
 };
