@@ -38,6 +38,7 @@ table ThroughputResp {
   throughput: string;
   time_stamp: string;
   total_bytes: string;
+  no_connection: string;
 }
 
 union ROCType {
