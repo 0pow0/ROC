@@ -55,3 +55,21 @@ std::pair<uint8_t*, int> ROCBuilder::buildSINRResp (
     return std::make_pair(buffer_pointer, (int) builder.GetSize());
     //return (int) builder.GetSize();
 }
+
+std::pair<uint8_t*, int> ROCBuilder::buildEnbResp (string delay, string id, string used_RB)
+{
+    flatbuffers::FlatBufferBuilder builder(0);
+    eNBRespBuilder.enb_id = id;
+    eNBRespBuilder.used_RB = used_RB;
+    auto eNBResp = eNBRespBuilder.buildEnbRespBuilder(builder);
+    auto delay_ = builder.CreateString(delay);
+    auto rocInfo = ROC::CreateROCInfo(
+        builder,
+        delay_,
+        ROC::ROCType_EnbResp,
+        eNBResp.Union()
+    );
+    builder.Finish(rocInfo); 
+    uint8_t* buffer_pointer = builder.GetBufferPointer();
+    return std::make_pair(buffer_pointer, (int) builder.GetSize());
+}

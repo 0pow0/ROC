@@ -14,6 +14,7 @@ public class ROCBuilder {
     public DeletionInfoBuilder deletionInfoBuilder;
     public SINRReqBuilder sinrReqBuilder;
     public ThroughputReqBuilder throughputReqBuilder;
+    public EnbReqBuilder eNBReqBuilder;
     private int messageLength = 1024;
 
     public ROCBuilder() {
@@ -22,6 +23,24 @@ public class ROCBuilder {
         this.deletionInfoBuilder = new DeletionInfoBuilder();
         this.sinrReqBuilder = new SINRReqBuilder();
         this.throughputReqBuilder = new ThroughputReqBuilder();
+        this.eNBReqBuilder = new EnbReqBuilder();
+    }
+
+    public byte[] buildEnbReq(String delay, String eNBID) {
+        FlatBufferBuilder builder = new FlatBufferBuilder(0);
+        eNBReqBuilder.setEnBID(eNBID);
+        int eNBReq = eNBReqBuilder.buildEnbReq(builder);
+        int delay_ = builder.createString(delay);
+
+        ROCInfo.startROCInfo(builder);
+        ROCInfo.addDelay(builder, delay_);
+        ROCInfo.addInfoType(builder, ROCType.EnbReq);
+        ROCInfo.addInfo(builder, eNBReq);
+        int rocInfo = ROCInfo.endROCInfo(builder);
+        builder.finish(rocInfo);
+        byte[] buf = builder.sizedByteArray();
+        if (buf.length < 1024) buf = Arrays.copyOf(buf, messageLength);
+        return buf;
     }
 
     public byte[] buildThroughputReq(String delay, String uavId) {
