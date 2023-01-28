@@ -1,19 +1,19 @@
 namespace ROC;
 
-table ActionInfo {
+table ActionReq {
   uav_id: string;
   latitude: string;
   longitude: string;
 }
 
-table CreationInfo {
+table CreationReq {
   uav_id: string;
   latitude: string;
   longitude: string;
   master_id: int;
 }
 
-table DeletionInfo {
+table DeletionReq {
   uav_id: string; 
 }
 
@@ -41,6 +41,24 @@ table ThroughputResp {
   no_connection: string;
 }
 
+table SinrModelInputElement {
+  distance: string;
+  tx_power: string;
+  bw: string; 
+  sub_bw: string;
+  sub_off: string;
+}
+
+table PredictionModelInputReq {
+  uav_id: string;
+}
+
+table PredictionModelInputResp {
+  uav_id: string;
+  input_sinr_model: [SinrModelInputElement];
+  distance_to_attached: string; 
+}
+
 table EnbReq {
   enb_id: string;
 }
@@ -48,23 +66,34 @@ table EnbReq {
 table EnbResp {
   enb_id: string;
   used_rb: string;
+  number_of_ue: string;
 }
 
-union ROCType {
-  Action: ActionInfo,
-  Create: CreationInfo,
-  Delete: DeletionInfo,
+table UeReq {
+  ue_id: string;  
+}
+
+table UeResp {
+  ue_id: string;
+  attached_enb_id: string; 
+}
+
+union MessageType {
+  ActionReq: ActionReq,
+  CreationReq: CreationReq,
+  DeletionReq: DeletionReq,
   SINRReq: SINRReq,
   SINRResp: SINRResp,
   ThroughputReq: ThroughputReq,
   ThroughputResp: ThroughputResp,
   EnbReq: EnbReq,
-  EnbResp: EnbResp
+  EnbResp: EnbResp,
+  UeReq: UeReq,
+  UeResp: UeResp
 }
 
-table ROCInfo {
-  delay: string;
-  info: ROCType;
+table Message {
+  data: MessageType;
 }
 
-root_type ROCInfo;
+root_type Message;

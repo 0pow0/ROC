@@ -15,6 +15,7 @@ public class ROCBuilder {
     public SINRReqBuilder sinrReqBuilder;
     public ThroughputReqBuilder throughputReqBuilder;
     public EnbReqBuilder eNBReqBuilder;
+    public PredictionModelInputReqBuilder predictionModelInputReqBuilder;
     private int messageLength = 1024;
 
     public ROCBuilder() {
@@ -24,6 +25,7 @@ public class ROCBuilder {
         this.sinrReqBuilder = new SINRReqBuilder();
         this.throughputReqBuilder = new ThroughputReqBuilder();
         this.eNBReqBuilder = new EnbReqBuilder();
+        this.predictionModelInputReqBuilder = new PredictionModelInputReqBuilder();
     }
 
     public byte[] buildEnbReq(String delay, String eNBID) {
@@ -70,6 +72,23 @@ public class ROCBuilder {
         ROCInfo.addDelay(builder, delay_);
         ROCInfo.addInfoType(builder, ROCType.SINRReq);
         ROCInfo.addInfo(builder, sinrReq);
+        int rocInfo = ROCInfo.endROCInfo(builder);
+        builder.finish(rocInfo);
+        byte[] buf = builder.sizedByteArray();
+        if (buf.length < 1024) buf = Arrays.copyOf(buf, messageLength);
+        return buf;
+    }
+
+    public byte[] buildPredictionModelInputReq(String delay, String uavId) {
+        FlatBufferBuilder builder = new FlatBufferBuilder(0);
+        predictionModelInputReqBuilder.setUavId(uavId);
+        int req = predictionModelInputReqBuilder.buildPredictionModelInputReq(builder);
+        int delay_ = builder.createString(delay);
+        
+        ROCInfo.startROCInfo(builder);
+        ROCInfo.addDelay(builder, delay_);
+        ROCInfo.addInfoType(builder, ROCType.PredictionModelInputReq);
+        ROCInfo.addInfo(builder, req);
         int rocInfo = ROCInfo.endROCInfo(builder);
         builder.finish(rocInfo);
         byte[] buf = builder.sizedByteArray();
