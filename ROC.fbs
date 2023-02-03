@@ -78,6 +78,16 @@ table UeResp {
   attached_enb_id: string; 
 }
 
+table ExpressUeInfoReq {
+  lng: string;
+  lat: string;
+}
+
+table ExpressUeInfoResp {
+  sinr: string; 
+  attached_enb_id: string;
+}
+
 union MessageType {
   ActionReq: ActionReq,
   CreationReq: CreationReq,
@@ -89,7 +99,9 @@ union MessageType {
   EnbReq: EnbReq,
   EnbResp: EnbResp,
   UeReq: UeReq,
-  UeResp: UeResp
+  UeResp: UeResp,
+  ExpressUeInfoReq: ExpressUeInfoReq,
+  ExpressUeInfoResp: ExpressUeInfoResp
 }
 
 table Message {

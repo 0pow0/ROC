@@ -3,4 +3,4 @@ all: compile
 	cd ../../out/cpp && ar rcs libroc.a ./*.o
 	cd ../../out/cpp && rm ./*.o
 compile:
-	clang++ -c -std=c++11 ../../src/cpp/*.cc -I ../../../cpp/include -I ../../../cpp
+	g++ -c -fPIC -std=c++11 ../../src/cpp/*.cc -I ../../../cpp/include -I ../../../cpp
